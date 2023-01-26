@@ -1,5 +1,6 @@
-# IBP_based_XAI_AP_training
-Explanation methods are used to supervise models with human specified saliency maps. 
-Therefore, efficacy of the supervision depends on quality of explanation method. 
+# Robust Learning from Explanations
 
-This is an attempt to loop-out explanation methods from supervision of saliency maps by using IBP to supervise.
+Code accompanying submission titled "Robust Learning from Explanations" to ICML 2023. 
+
+Algorithm implementations can be found in `src/module` and dataset implementations in `src/datasets`.   
+Hyperparameter searches and best hyperoparameters are documented in `src/configs/expts.py`.
