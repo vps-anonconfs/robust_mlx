@@ -7,6 +7,7 @@ import torch
 import numpy as np
 from PIL import Image
 
+# called decoy-cifar10 for historical reasons, but is referred to as decoy-mnist in the paper. 
 from src.datasets.standard_dataset import DatasetWithSpecifications
 
 
