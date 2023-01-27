@@ -9,12 +9,11 @@ class Interpreter:
             x.requires_grad = True
         
         # Autograd
-        #y_hat_c = y_hat[range(len(y_)), y_] # For classification
         if method == 'rrr':
-            y_hat_c = y_hat  # For regression
+            y_hat_c = y_hat 
             return self.simple_grad(x, y_hat_c, trainable=trainable)
         else:
-            y_hat_c = y_hat  # For regression
+            y_hat_c = y_hat
             h = self.simple_grad(x, y_hat_c, trainable=trainable)
 
         # reduction
@@ -37,20 +36,8 @@ class Interpreter:
             
         return h
     
-    def simple_grad_old(self, x, y_hat_c, trainable=False):
+    def simple_grad(self, x, y_hat_c, trainable=False):
         h = torch.autograd.grad(
             y_hat_c, x, grad_outputs=torch.ones_like(y_hat_c), create_graph=trainable, retain_graph=trainable,
         )[0]
-        return h
-    
-    def simple_grad(self, x, y_hat_c, trainable=False):
-        if (len(y_hat_c.shape) > 1) and (y_hat_c.shape[1] == 2):
-            h = [torch.autograd.grad(
-                y_hat_c[:, i], x, grad_outputs=torch.ones_like(y_hat_c[:, i]), create_graph=trainable, retain_graph=trainable,
-            )[0] for i in range(y_hat_c.shape[1])]
-            h = torch.stack([_h**2 for _h in h], dim=-1).sum(dim=-1)
-        else:
-            h = torch.autograd.grad(
-                y_hat_c, x, grad_outputs=torch.ones_like(y_hat_c), create_graph=trainable, retain_graph=trainable,
-            )[0]
         return h
