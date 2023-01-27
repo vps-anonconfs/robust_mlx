@@ -13,6 +13,8 @@ from src.module import (
     LitIBPClassifier,
     LitRRRClassifier,
     LitCDEPClassifier
+    LitPGDClassifier,
+    LitCoRMClassifier,
 )
 import neptune.new as neptune
 
@@ -22,6 +24,10 @@ from src.datasets.data_module import DataModule
 
 
 def cli_main():
+    
+    """
+    Best hyperparameter can be found in configs/expts.py
+    """
     # ------------ args -------------
     parser = ArgumentParser(add_help=False, formatter_class=ArgumentDefaultsHelpFormatter)
     parser.add_argument('--name', type=str, help="Name of config expt from config.expts")
@@ -71,9 +77,12 @@ def cli_main():
     # --heatmaps args for rrr
     parser.add_argument("--rrr_hm_method", type=str, default="rrr", help="interpretation method")
     parser.add_argument("--rrr_hm_norm", type=str, default="none")
-    parser.add_argument("--rrr_hm_thres", type=str, default="abs")
+    parser.add_argument("--rrr_hm_thres", type=str, default="none")
     # --cdep
     parser.add_argument("--cdep_ap_lamb", type=float, default=0.0)
+    # --corm
+    parser.add_argument("--corm_EPSILON", type=float, default=0.0)
+    
 
     # neptune related config
     parser.add_argument("--user", type=str, default='vihari',
@@ -97,6 +106,10 @@ def cli_main():
         classifier = LitIBPClassifier
     elif args.alg.lower() == 'cdep':
         classifier = LitCDEPClassifier
+    elif args.alg.lower() == 'pgd':
+        classifier = LitPGDClassifier
+    elif args.alg.lower() == 'corm':
+        classifier = LitCoRMClassifier
     else:
         raise Exception("regularizer name error")
 
@@ -148,38 +161,6 @@ def cli_main():
     # ------------ run -------------
     trainer.fit(model, datamodule=data_module)
     trainer.test(model, dataloaders=data_module)
-    # logs = {
-    #     'dcifar2': {'cdep': [], 'ibp_rrr': [991, 1003, 942], 'erm': [943, 948], 'rrr': [1001, 992, 945],
-    #                 'ibp': [1039, 1031, 1013]},
-    #     'isic': {'cdep': [359, 355, 353], 'rrr': [], 'erm': [339, 343, 334], 'ibp': [335, 336, 338]},
-    #     'plant': {'cdep': [695, 696, 697], 'erm': [683, 684, 685], 'ibp': [687, 689, 690]}
-    # }
-    # dset = 'dcifar'
-    # for alg in logs[dset].keys(): # , "IBP2-682"]: # ["IBP2-687", "IBP2-689", "IBP2-690"]: # ["IBP2-683", "IBP2-684", "IBP2-685"]:
-    #         # ["IBP2-611", "IBP2-606", "IBP2-584", "IBP2-598", "IBP2-581"]:
-    #     #["IBP2-359", "IBP2-355", "IBP2-353"]: #["IBP2-335", "IBP2-336", "IBP2-338"]: # ["IBP2-334", "IBP2-339", "IBP2-343"]: # ["IBP2-345", "IBP2-346", "IBP2-344"]:
-    #     all_test_stats = []
-    #     for run in logs[dset][alg]:
-    #         fldr = f"{args.default_root_dir}/IBP2-{run}"
-    #         fname = [fname for fname in os.listdir(fldr) if fname.startswith('checkpt')][0]
-    #         # fname = "last.ckpt"
-    #         fldr = f"{fldr}/{fname}"
-    #         test_stats = trainer.test(model, dataloaders=data_module, ckpt_path=fldr)[0]
-    #         all_test_stats.append(test_stats)
-    #     if len(all_test_stats) > 0:
-    #         print(f"Alg: {alg}")
-    #         print("----------")
-    #         for metric in test_stats.keys():
-    #             mvals = [ts[metric] for ts in all_test_stats]
-    #             print(f"{metric}: {np.mean(mvals), np.std(mvals)}")
-    #
-    # print(len(data_module.test_dataset), type(data_module.test_dataset), len(data_module.test_dataloader()))
-    # for dl in data_module.test_dataloader():
-    #     trainer.test(model, dataloaders=dl,
-    #                  # ckpt_path=f"{args.default_root_dir}/IBP2-260/last.ckpt"
-    #                  # ckpt_path=f"{args.default_root_dir}/IBP2-261/checkpt-epoch=09-valid_acc=0.71.ckpt"
-    #                  ckpt_path=f"{args.default_root_dir}/IBP2-274/last.ckpt"
-    #                  )
     run.stop()
 
 
