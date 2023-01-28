@@ -43,7 +43,7 @@ toy_expts = {
 }
 
 mnist_expts = {
-    'erm_mnist_expt1': {
+    'erm_mnist_expt': {
         'alg': 'erm',
         'dataset': 'cmnist',
         'user': 'dummy',
@@ -52,7 +52,7 @@ mnist_expts = {
         'weight_decay': 1e-4,
         'dataset_kwargs': {'mask_type': 'irrel'},
     },
-    'cdep_mnist_expt1': {
+    'cdep_mnist_expt': {
         'alg': 'cdep',
         'dataset': 'cmnist',
         'user': 'dummy',
@@ -62,7 +62,7 @@ mnist_expts = {
         'dataset_kwargs': {'mask_type': 'relirrel'},
         'cdep_ap_lamb': 1000,
     },
-    'ibp_mnist_expt1': {
+    'ibp_mnist_expt': {
         'alg': 'ibp',
         'dataset': 'cmnist',
         'user': 'dummy',
