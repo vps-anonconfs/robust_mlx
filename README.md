@@ -28,10 +28,12 @@ Hyperparameter searches and best hyperoparameters are documented in `src/configs
 - The default experiment settings for each dataset are in `src/configs/dataset_defaults.py`
 
 
-### Experiments
+### Algorithms
 
 - We have 5 methods (RRR, IBP-Ex, PGD-Ex, CDEP, CoRM) in `src/module`, whose parent module is `base_trainer.py`.
 - The default experiment settings for each method are in `src/configs/alg_defaults.py`
+
+### Experiments
 
 - Run the code with the best hyperparameter setting we found for each dataset in `src/configs/expts.py`.
 - For example, to train the model using our IBP-Ex method on the ISIC dataset,
