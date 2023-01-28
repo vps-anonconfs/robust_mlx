@@ -13,7 +13,7 @@ Hyperparameter searches and best hyperoparameters are documented in `src/configs
 - Setup the conda environment IBPEx by running:
 
     ```bash
-    bash setup_dependencies.sh
+    conda env create -f setup_dependencies.yml
     ```
   If you want to make use of your GPU, you might have to install a cuda-enabled pytorch version manually. Use the appropriate command provided [here](https://pytorch.org/) to achieve this.
   Before running code, activate the environment IBPEx.
@@ -31,8 +31,9 @@ Hyperparameter searches and best hyperoparameters are documented in `src/configs
 ### Experiments
 
 - We have 5 methods (RRR, IBP-Ex, PGD-Ex, CDEP, CoRM) in `src/module`, whose parent module is `base_trainer.py`.
-- Run the code with the best hyperparameter setting we found for each dataset in `src/configs/expts.py`.
+- The default experiment settings for each method are in `src/configs/alg_defaults.py`
 
+- Run the code with the best hyperparameter setting we found for each dataset in `src/configs/expts.py`.
 - For example, to train the model using our IBP-Ex method on the ISIC dataset,
 
     ``` bash
