@@ -36,10 +36,10 @@ Hyperparameter searches and best hyperoparameters are documented in `src/configs
 ### Experiments
 
 - Run the code with the best hyperparameter setting we found for each dataset in `src/configs/expts.py`.
-- For example, to train the model using our IBP-Ex method on the ISIC dataset,
+- For example, to train the model using our IBP-Ex method on the Plant phenotyping dataset,
 
     ``` bash
-    python main.py --name 'ibp_isic_expt'
+    python main.py --name 'ibp_plant_expt3'
     ```
 
 - View all possible command-line options by running
